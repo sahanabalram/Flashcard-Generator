@@ -13,14 +13,14 @@ inquirer.prompt([{
     {
         message: "Which type of Game would you like to play?",
         type: "checkbox",
-        choices: ["Basic", "Cloze"],
+        choices: ["Basic Card", "Cloze Card"],
         name: "startGame"
     }
 ]).then(function (answers) {
     var game = answers.startGame[0];
-    if (game === "Basic") {
+    if (game === "Basic Card") {
         Game("basic-card.json");
-    } else if (game === "Cloze") {
+    } else if (game === "Cloze Card") {
         Game("cloze-card.json");
     }
 });
@@ -28,7 +28,7 @@ inquirer.prompt([{
 
 function startBasicGame(questionAnswer, qno) {
     inquirer.prompt([{
-        message: questionAnswer[qno].front + "?",
+        message: questionAnswer[qno].front,
         type: "input",
         name: "answer"
     }]).then(function (answer) {
@@ -52,8 +52,8 @@ function startBasicGame(questionAnswer, qno) {
                 name: "option"
             }]).then(function (answer) {
                 if (answer.option === true) {
-                     score = 0;
-                   startBasicGame(questionAnswer,0);      
+                    score = 0;
+                    startBasicGame(questionAnswer, 0);
                 } else {
                     console.log("Thank You for playing the game");
                 }
@@ -71,21 +71,64 @@ function Game(filename) {
         } else {
             var questionAnswer = [];
             var lines = JSON.parse(data);
+            // Read the data from the line.
             for (var i = 0; i < lines.length; i++) {
                 // console.log(lines[i].split("?"));  
-                questionAnswer.push(new BasicCard(lines[i].front, lines[i].back));
+                // A new card gets created using the BasicCard constructor where a new instance gets created for the object and the card is pushed into the lines variable
+                // When the user selects Basic Card game then the instance for Basic Card game should get created.
+                // When the user selectd Cloze Card game then the instance for the Cloze Card game should get created.
+                if (filename === "basic-card.json") {
+                    questionAnswer.push(new BasicCard(lines[i].front, lines[i].back));
+                } else {
+                    questionAnswer.push(new ClozeCard(lines[i].front, lines[i].back));
+                }
             }
             // console.log(questionAnswer);
-            if(filename == "basic-card.json") {
+            if (filename == "basic-card.json") {
                 startBasicGame(questionAnswer, 0);
             } else {
-                // startClozeGame(questionAnswer, 0);
+                startClozeGame(questionAnswer, 0);
             }
-            
+
         }
     });
 }
 
-function startClozeGame() {
+function startClozeGame(questionAnswer,qno) {
+    inquirer.prompt([{
+        message: questionAnswer[qno].partial + "\n",
+        type: "input",
+        name: "cloze"
+    }]).then(function (answer) {
+        if (answer.cloze.toLowerCase() === questionAnswer[qno].cloze.toLowerCase()) {
+            score++;
+            console.log("Score: " + score);
+            console.log("Correct Answer");
+            console.log("------------------------");
+        } else {
+            console.log("Incorrect Answer");
+            console.log("Correct Answer is : " + questionAnswer[qno].text);
+            console.log("Score: " + score);
+            console.log("------------------------");
+        }
+        if (questionAnswer.length - 1 > qno) {
+            startClozeGame(questionAnswer, qno + 1);
+        } else {
+            console.log("Final Score: " + score);
+            inquirer.prompt([{
+                message: "Would you like to play again??",
+                type: "confirm",
+                name: "option"
+            }]).then(function (answer) {
+                if (answer.option === true) {
+                    score = 0;
+                    startClozeGame(questionAnswer, 0);
+                } else {
+                    console.log("Thank You for playing the game");
+                }
 
+            })
+        }
+
+    });
 }
