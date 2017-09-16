@@ -1,16 +1,17 @@
 // importing the basicCard modules from BasicCard.js file
 var BasicCard = require("./BasicCard.js");
-
-function ClozeCard(cloze, partial, fullText) {
+function ClozeCard(text,cloze) {
+    this.text = text;
+    console.log(this.text);
     this.cloze = cloze;
-    this.partial = partial;
-    this.fullText = fullText;
+    console.log(this.cloze);
     this.logError = function (cloze, pratial, fullText) {
      // The constructor should throw or log an error when the cloze deletion does not appear in the input text.
-        var str = fullText;
-        var n = str.includes(cloze);
-        if (n === true) {
-            console.log("This doesn't look right!!!!");
+        if (text.includes(cloze)) {
+           this.pratial = text.replace(cloze,"...");
+        } else {
+            conosle.log("This dosn't look correct");
+            this.pratial = "Error";
         }
 
     }
