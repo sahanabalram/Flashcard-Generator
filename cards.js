@@ -25,10 +25,9 @@ inquirer.prompt([{
     }
 });
 
-
 function startBasicGame(questionAnswer, qno) {
     inquirer.prompt([{
-        message: questionAnswer[qno].front,
+        message: questionAnswer[qno].front + "\n",
         type: "input",
         name: "answer"
     }]).then(function (answer) {
@@ -57,10 +56,8 @@ function startBasicGame(questionAnswer, qno) {
                 } else {
                     console.log("Thank You for playing the game");
                 }
-
             })
         }
-
     });
 }
 
@@ -71,25 +68,20 @@ function Game(filename) {
         } else {
             var questionAnswer = [];
             var lines = JSON.parse(data);
-            // Read the data from the line.
-            for (var i = 0; i < lines.length; i++) {
-                // console.log(lines[i].split("?"));  
-                // A new card gets created using the BasicCard constructor where a new instance gets created for the object and the card is pushed into the lines variable
-                // When the user selects Basic Card game then the instance for Basic Card game should get created.
-                // When the user selectd Cloze Card game then the instance for the Cloze Card game should get created.
-                if (filename === "basic-card.json") {
+            // A new card gets created using the BasicCard constructor where a new instance gets created for the object and the card is pushed into the questionAnswer list
+            // When the user selects Basic Card game then the instance for Basic Card game should get created.
+            // When the user selectd Cloze Card game then the instance for the Cloze Card game should get created.
+            if (filename === "basic-card.json") {
+                for (var i = 0; i < lines.length; i++) {
                     questionAnswer.push(new BasicCard(lines[i].front, lines[i].back));
-                } else {
-                    questionAnswer.push(new ClozeCard(lines[i].front, lines[i].back));
                 }
-            }
-            // console.log(questionAnswer);
-            if (filename == "basic-card.json") {
                 startBasicGame(questionAnswer, 0);
             } else {
+                for (var i = 0; i < lines.length; i++) {
+                    questionAnswer.push(new ClozeCard(lines[i].front, lines[i].back));
+                }
                 startClozeGame(questionAnswer, 0);
             }
-
         }
     });
 }
@@ -126,9 +118,7 @@ function startClozeGame(questionAnswer,qno) {
                 } else {
                     console.log("Thank You for playing the game");
                 }
-
             })
         }
-
     });
 }
