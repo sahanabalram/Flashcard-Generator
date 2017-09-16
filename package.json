@@ -1,0 +1,22 @@
+{
+  "name": "flashcard-generator",
+  "version": "1.0.0",
+  "description": "A backend flash card game",
+  "main": "BasicCard.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sahanabalram/Flashcard-Generator.git"
+  },
+  "author": "Sahana Balram",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sahanabalram/Flashcard-Generator/issues"
+  },
+  "homepage": "https://github.com/sahanabalram/Flashcard-Generator#readme",
+  "dependencies": {
+    "inquirer": "^3.2.3"
+  }
+}
