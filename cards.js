@@ -3,14 +3,10 @@ var ClozeCard = require("./ClozeCard.js");
 var inquirer = require("inquirer");
 var fs = require("fs");
 var score = 0;
-
-inquirer.prompt([{
-        message: "Do you want to play the Flash Card Game!!!",
-        type: "checkbox",
-        choices: ["Yes", "No"],
-        name: "game"
-    },
+console.log("Welcome to the Flash Card game!!!");
+inquirer.prompt([
     {
+    
         message: "Which type of Game would you like to play?",
         type: "checkbox",
         choices: ["Basic Card", "Cloze Card"],
