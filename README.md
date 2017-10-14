@@ -13,3 +13,7 @@ In the Cloze card the answer will be represented as ...
 - Inquirer : https://www.npmjs.com/package/inquirer
 
 ![screenshot of the App](Game setup.png)
+
+## Author
+
+Sahana Balram
